@@ -21,7 +21,7 @@
 private YunYanApiClient yunYanApiClient; # 云眼api client
 
 Map<String, Object> paramMap1 = Maps.newHashMap();
-paramMap1.put(YunYanVariable.REGION_ID, "123"); # 参数key值为了统一，建议使用TianYiVariable类
+paramMap1.put(YunYanVariable.REGION_ID, "123"); # 参数key值为了统一，建议使用YunYanVariable类
 
 # 返回对象是list
 BusinessPojo1 response1 = yunYanApiClient.executeApi("/open/token/device/getReginWithGroupList", paramMap1, false,
