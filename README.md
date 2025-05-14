@@ -11,6 +11,17 @@
 ### 注意
 目前只封装了通用调用接口的处理。具体用到哪个api需要参考接口文档：https://open.ctseelink.cn/portal/document-open/
 ## 使用方式
+pom导入包，目前已上传maven中央仓库：
+~~~
+# pom.xml导入包
+<dependencies>
+    <dependency>
+        <groupId>io.github.lb1565387341</groupId>
+        <artifactId>yunyan-spring-boot-starter</artifactId>
+        <version>0.0.1</version>
+    </dependency>
+</dependencies>
+~~~
 以查询监控树举例：
 - 1.找到uri![img_1.png](img_1.png)
 - 2.只需要传业务参数![img_2.png](img_2.png)
