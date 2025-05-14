@@ -204,7 +204,8 @@
     </build>
     <!--中央仓库上传配置结束-->
 
-    <!-- 快照版本通过pom.xml中配置以下节点拉取
+    <!-- 快照版本通过pom.xml中配置以下节点拉取。
+    快照版本网页查询：https://central.sonatype.com/service/rest/repository/browse/maven-snapshots/
     <repositories>
         <repository>
             <name>Central Portal Snapshots</name>
