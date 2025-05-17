@@ -4,6 +4,7 @@ import com.liubei.yunyan.service.auth.DefaultYunYanAuthManager;
 import com.liubei.yunyan.service.auth.YunYanAuthManager;
 import com.liubei.yunyan.service.client.YunYanApiClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -30,9 +31,9 @@ public class YunYanAutoConfiguration {
     }
 
     @Bean
+    @ConditionalOnBean(YunYanAuthManager.class)
     public YunYanApiClient yunYanApiClient(YunYanAuthManager yunYanAuthManager) {
         return new YunYanApiClient(yunYanAuthManager);
     }
-
 
 }
