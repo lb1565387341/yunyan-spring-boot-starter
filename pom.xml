@@ -11,7 +11,7 @@
 
     <groupId>io.github.lb1565387341</groupId>
     <artifactId>yunyan-spring-boot-starter</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2</version>
 
     <name>${project.artifactId}</name>
     <description>基于天翼云眼能力开放平台封装SDK</description>
