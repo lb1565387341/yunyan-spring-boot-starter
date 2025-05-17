@@ -2,6 +2,7 @@ package com.liubei.yunyan.config;
 
 import com.liubei.yunyan.service.auth.DefaultYunYanAuthManager;
 import com.liubei.yunyan.service.auth.YunYanAuthManager;
+import com.liubei.yunyan.service.client.YunYanApiClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -24,8 +25,14 @@ public class YunYanAutoConfiguration {
 
     @Bean
     @ConditionalOnProperty(prefix = "yun-yan", value = "enabled", havingValue = "true")
-    public YunYanAuthManager aipImageClassifyFactory(YunYanProperties yunYanProperties) {
+    public YunYanAuthManager yunYanAuthManager(YunYanProperties yunYanProperties) {
         return new DefaultYunYanAuthManager(yunYanProperties);
     }
+
+    @Bean
+    public YunYanApiClient yunYanApiClient(YunYanAuthManager yunYanAuthManager) {
+        return new YunYanApiClient(yunYanAuthManager);
+    }
+
 
 }

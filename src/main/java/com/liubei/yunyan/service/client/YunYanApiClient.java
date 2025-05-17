@@ -18,25 +18,19 @@ import com.liubei.yunyan.common.pojo.CommonResult;
 import com.liubei.yunyan.common.util.YunYanUtils;
 import com.liubei.yunyan.config.YunYanProperties;
 import com.liubei.yunyan.service.auth.YunYanAuthManager;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-@Component
 public class YunYanApiClient {
-    @Resource
-    private YunYanAuthManager authManager;
-    private XXTEA xxtea;
-    private HMac hMac;
-    private RSA rsa;
+    private final YunYanAuthManager authManager;
+    private final XXTEA xxtea;
+    private final HMac hMac;
+    private final RSA rsa;
 
-    @PostConstruct
-    void initEncrypt() {
+    public YunYanApiClient(YunYanAuthManager authManager) {
+        this.authManager = authManager;
         xxtea = new XXTEA(authManager.getProperties().getAppSecret().getBytes());
         hMac = DigestUtil.hmac(HmacAlgorithm.HmacSHA256, authManager.getProperties().getAppSecret().getBytes());
         rsa = new RSA(authManager.getProperties().getRsaPrivateKey(), null);
