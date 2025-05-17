@@ -1,7 +1,11 @@
 package com.liubei.yunyan.config;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import static com.liubei.yunyan.common.exception.enums.GlobalErrorCodeConstants.PROPERTIES_CONFIG_NOT_COMPLETE;
+import static com.liubei.yunyan.common.util.ServiceExceptionUtil.exception;
 
 @Data
 @ConfigurationProperties(prefix = "yun-yan")
@@ -19,10 +23,6 @@ public class YunYanProperties {
      */
     private String appId;
     /**
-     * apiKey不为空
-     */
-    private String apiKey;
-    /**
      * secretKey不为空
      */
     private String appSecret;
@@ -35,7 +35,7 @@ public class YunYanProperties {
      */
     private String enterpriseUser;
     /**
-     * http请求超时时间，默认10秒
+     * http请求超时时间，默认10秒。单位：milliseconds
      */
     private int httpTimeout = 10 * 1000;
     /**
@@ -59,4 +59,13 @@ public class YunYanProperties {
      * 4-服务端
      */
     private Integer clientType = 3;
+
+    public void validate() {
+        if (!enabled) return;
+        if (StrUtil.isBlank(appId) || StrUtil.isBlank(appSecret) || StrUtil.isBlank(rsaPrivateKey)
+                || StrUtil.isBlank(enterpriseUser)) {
+            throw exception(PROPERTIES_CONFIG_NOT_COMPLETE, "appId|appSecret|rsaPrivateKey|enterpriseUser empty.");
+        }
+
+    }
 }

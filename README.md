@@ -18,10 +18,20 @@ pom导入包，目前已上传maven中央仓库：
     <dependency>
         <groupId>io.github.lb1565387341</groupId>
         <artifactId>yunyan-spring-boot-starter</artifactId>
-        <version>0.0.1</version>
+        <version>0.0.2</version>
     </dependency>
 </dependencies>
 ~~~
+yaml文件增加配置
+~~~
+yun-yan:
+  enabled: true # 启用组件
+  app-id: # 平台配置-AppID（应用ID）
+  app-secret: # 平台配置-AppSecret（应用请求密钥）
+  rsa-private-key: # 平台配置-RSA私钥（rsa_private_key）
+  enterprise-user: # 企业号。主账号手机号
+~~~
+
 以查询监控树举例：
 - 1.找到uri![img_1.png](img_1.png)
 - 2.只需要传业务参数![img_2.png](img_2.png)
