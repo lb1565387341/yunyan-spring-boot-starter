@@ -27,6 +27,7 @@ public class YunYanAutoConfiguration {
     @Bean
     @ConditionalOnProperty(prefix = "yun-yan", value = "enabled", havingValue = "true")
     public YunYanAuthManager yunYanAuthManager(YunYanProperties yunYanProperties) {
+        yunYanProperties.validate();
         return new DefaultYunYanAuthManager(yunYanProperties);
     }
 

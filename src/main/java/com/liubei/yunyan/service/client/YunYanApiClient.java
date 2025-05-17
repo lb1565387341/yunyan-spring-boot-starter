@@ -23,6 +23,9 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Map;
 
+import static com.liubei.yunyan.common.exception.enums.GlobalErrorCodeConstants.YUN_YAN_COMMON_QUERY_EXCEPTION;
+import static com.liubei.yunyan.common.util.ServiceExceptionUtil.exception;
+
 public class YunYanApiClient {
     private final YunYanAuthManager authManager;
     private final XXTEA xxtea;
@@ -46,29 +49,30 @@ public class YunYanApiClient {
      * @param <T>
      */
     public <T> T executeApi(String url, Map<String, Object> params, boolean needDecrypt, TypeReference<T> typeReference) {
-        // 1. 生成公共参数
-        HttpResponse response = HttpUtil.createPost(authManager.getProperties().getBaseUrl() + url)
+        try (HttpResponse response = HttpUtil.createPost(authManager.getProperties().getBaseUrl() + url)
+                // 1. 生成公共参数
                 .form(buildPublicParams(params))
                 .header(YunYanVariable.API_VERSION, authManager.getProperties().getApiVersion())
-                .timeout(10 * 1000).execute();
-        if (response.getStatus() != 200 || StrUtil.isBlank(response.body())) {
-            throw new RuntimeException("Failed to obtain access token.http请求token失败，http响应状态不正确/返回结果空");
-        }
-        // 不需要解密直接返回
-        if (!needDecrypt) {
-            CommonResult<T> result = YunYanUtils.toBean(response.body(),
-                    this.convertCommonResultType(typeReference),
-                    true
-            );
-            assert result != null;
-            return result.getCheckedData();
-        } else {
-            CommonResult<String> result = YunYanUtils.toBean(response.body(),
-                    new TypeReference<CommonResult<String>>() {},
-                    true
-            );
-            assert result != null;
-            return xxteaDecryptDataToBean(result.getCheckedData(), typeReference);
+                .timeout(authManager.getProperties().getHttpTimeout()).execute()) {
+            if (response.getStatus() != 200 || StrUtil.isBlank(response.body())) {
+                throw exception(YUN_YAN_COMMON_QUERY_EXCEPTION, response.body());
+            }
+            // 不需要解密直接返回
+            if (!needDecrypt) {
+                CommonResult<T> result = YunYanUtils.toBean(response.body(),
+                        this.convertCommonResultType(typeReference),
+                        true
+                );
+                assert result != null;
+                return result.getCheckedData();
+            } else {
+                CommonResult<String> result = YunYanUtils.toBean(response.body(),
+                        new TypeReference<CommonResult<String>>() {},
+                        true
+                );
+                assert result != null;
+                return xxteaDecryptDataToBean(result.getCheckedData(), typeReference);
+            }
         }
     }
 

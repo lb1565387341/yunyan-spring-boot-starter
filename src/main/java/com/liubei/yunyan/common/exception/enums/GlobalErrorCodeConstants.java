@@ -19,4 +19,5 @@ public interface GlobalErrorCodeConstants {
     ErrorCode YUN_YAN_INTERNAL_SERVER_ERROR = new ErrorCode(5000, "Failure");
     ErrorCode YUN_YAN_COMMON_QUERY_EXCEPTION = new ErrorCode(5001, "Failed to request yun yan api.response body is {}");
     ErrorCode YUN_YAN_GET_TOKEN_EXCEPTION = new ErrorCode(5002, "Failed to obtain access token.response body is {}");
+    ErrorCode PROPERTIES_CONFIG_NOT_COMPLETE = new ErrorCode(4000, "YunYan properties config not complete.{}");
 }
